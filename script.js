@@ -1,4 +1,4 @@
-const data = {
+const characters = {
   characters: [
     {
       id: 1,
@@ -124,9 +124,35 @@ const data = {
 
 const content_ = document.getElementById("content_html");
 const button_content = document.getElementById("my-button");
+const content2_ = document.getElementById("content_html2");
+const element = document.getElementById("my-button");
 
-var element = document.getElementById("my-button");
+const homeworldsRaw = []; //Home world array that is raw
 
+//This 'for' loop pushes all of the homeworld  in the characters object into the raw array (in lower case) that created earlier
+for (const character of characters.characters) {
+  const homeworld_ = character.homeworld ?? "other";
+  homeworldsRaw.push(homeworld_.toLowerCase());
+}
+
+//Creating another array and deleting the duplicates by using set method
+const homeworlds = [...new Set(homeworldsRaw)];
+
+//This function is for generating radio in form by given homeworld
+function generateRadio(homeworld) {
+  return `
+      <div class="form-check mt-3">
+        <input class="form-check-input" type="radio" name="myRadios" id="homeworld-${homeworld}" value="${homeworld}">
+        <label class="form-check-label" for="homeworld-${homeworld}">${homeworld}</label>
+      </div>`;
+}
+
+//This 'for' loop is for calling generating radio function for every array element in the homeworlds array
+for (const homeworld of homeworlds) {
+  content2_.innerHTML += generateRadio(homeworld);
+}
+
+//This function is for generating character card for given character
 function generateCharacter(character) {
   return `
       <div class="col mb-3 d-flex justify-content-center">
@@ -140,27 +166,63 @@ function generateCharacter(character) {
       </div>`;
 }
 
-function show() {
+//This function is for reaching the selected radio and getting its value and calling show function to show character card
+function getSelectedRadioButton() {
+  let rad = content2_.myRadios;
   let i = 0;
-  while (i < data.characters.length) {
-    content_.innerHTML += generateCharacter(data.characters[i]);
+  while (i < rad.length) {
+    rad[i].addEventListener("change", function () {
+      let filteredHomeworld = this.value;
+      show(filteredHomeworld);
+    });
     i++;
   }
 }
+
+//Calling the function
+getSelectedRadioButton();
+
+function show(filteredHomeworld) {
+  hide(); // Clearing content that already shown
+  if (filteredHomeworld != null) {
+    //if filteredHomeworld is not null
+    const filteredCharacters = characters.characters.filter(
+      (
+        character //Filtering the character
+      ) =>
+        (character.homeworld && //if character homeworld is not null and
+          character.homeworld.toLowerCase() === filteredHomeworld) || //if it equals to the homeworld in array that is being turning into lower case //or
+        (!character.homeworld && filteredHomeworld.toLowerCase() === "other") //if its undefined or null and checks if filtered one is equal to other
+    );
+    //generates character for character cards for each of the character that is filtered
+    filteredCharacters.forEach((character) => {
+      content_.innerHTML += generateCharacter(character);
+    });
+  } else {
+    // Show all characters if no homeworld is selected
+    characters.characters.forEach((character) => {
+      content_.innerHTML += generateCharacter(character);
+    });
+  }
+}
+
+//Hides all the character cards
 function hide() {
   content_.innerHTML = "";
 }
 
+//Letting toggle_button to false
 let toggle_button = false;
 
 function myFunction() {
-  toggle_button = !toggle_button;
-  element.classList.toggle("red-button");
+  toggle_button = !toggle_button; //and equaling the toggle button to opposite every time its pressed
+  element.classList.toggle("red-button"); //and toggling with the red-button class name that changes the color of the button
   if (toggle_button) {
-    show();
-    button_content.innerHTML = "Hide Characters";
+    //if its true
+    show(); //show the all of the characters
+    button_content.innerHTML = "Hide Characters"; //and changing button text
   } else {
-    hide();
-    button_content.innerHTML = "Show Characters";
+    hide(); //Hides all the characters
+    button_content.innerHTML = "Show Characters"; //and changing button text
   }
 }

@@ -1,8 +1,8 @@
 .bg-img {
-min-height: 100vh;
   background-image: url("pexels-francesco-ungaro-998641.jpg");
   background-size: cover;
   background-repeat: no-repeat;
+  color: #fff;
 }
 
 .show-button, .red-button, .yellow-button {

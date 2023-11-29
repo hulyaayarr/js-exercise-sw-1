@@ -1,29 +1,27 @@
 .bg-img {
-    background-image: url('pexels-francesco-ungaro-998641.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
+  background-image: url("pexels-francesco-ungaro-998641.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #fff;
+}
 
+.show-button {
+  background-color: transparent;
+  padding: 10px 100px;
+  border-radius: 8px;
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.244);
   }
+}
 
-  .show-button{
-    background-color: transparent;
-    padding: 10px  100px;
-    border-radius: 8px;
-    &:hover{
-        background-color: rgba(255, 255, 255, 0.244)
-    }
-   
-    
-  }
+.yellow-button {
+  @extend .show-button;
+  color: yellow;
+  border: 1px solid yellow;
+}
 
-  .yellow-button{
-    @extend .show-button;
-    color: yellow;
-    border: 1px solid yellow;
-  }
-
-  .red-button{
-    @extend .show-button;
-    color: red;
-    border: 1px solid red;
-  }
+.red-button {
+  @extend .show-button;
+  color: red;
+  border: 1px solid red;
+}

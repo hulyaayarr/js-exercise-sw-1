@@ -125,7 +125,7 @@ const characters = {
 const content_ = document.getElementById("content_html");
 const button_content = document.getElementById("my-button");
 const content2_ = document.getElementById("content_html2");
-const element = document.getElementById("my-button");
+const button_ = document.getElementById("my-button");
 
 const homeworldsRaw = []; //Home world array that is raw
 
@@ -184,6 +184,9 @@ getSelectedRadioButton();
 
 function show(filteredHomeworld) {
   hide(); // Clearing content that already shown
+  button_content.innerHTML = "Hide Characters"; //changing button text
+  button_.classList.remove("yellow-button");
+  button_.classList.add("red-button");
   if (filteredHomeworld != null) {
     //if filteredHomeworld is not null
     const filteredCharacters = characters.characters.filter(
@@ -208,7 +211,10 @@ function show(filteredHomeworld) {
 
 //Hides all the character cards
 function hide() {
+  button_content.innerHTML = "Show Characters"; //and changing button text
   content_.innerHTML = "";
+  button_.classList.remove("red-button");
+  button_.classList.add("yellow-button");
 }
 
 //Letting toggle_button to false
@@ -216,13 +222,10 @@ let toggle_button = false;
 
 function myFunction() {
   toggle_button = !toggle_button; //and equaling the toggle button to opposite every time its pressed
-  element.classList.toggle("red-button"); //and toggling with the red-button class name that changes the color of the button
   if (toggle_button) {
     //if its true
     show(); //show the all of the characters
-    button_content.innerHTML = "Hide Characters"; //and changing button text
   } else {
     hide(); //Hides all the characters
-    button_content.innerHTML = "Show Characters"; //and changing button text
   }
 }
